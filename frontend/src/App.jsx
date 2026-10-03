@@ -3,6 +3,7 @@ import Hero from "./sections/Hero";
 import AboutSection from "./sections/AboutSection";
 import PopularDishes from "./sections/PopularDish";
 import GallerySection from "./sections/GallerySections";
+import ChefSection from "./sections/ChefSection";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <AboutSection />
         <PopularDishes />
         <GallerySection />
+        <ChefSection />
       </main>
     </div>
   );
