@@ -6,6 +6,7 @@ import GallerySection from "./sections/GallerySections";
 import ChefSection from "./sections/ChefSection";
 import TestimonialSection from "./sections/TestimonialSection";
 import ContactSection from "./sections/ContactSection";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <ChefSection />
         <TestimonialSection />
         <ContactSection />
+        <Footer />
       </main>
     </div>
   );

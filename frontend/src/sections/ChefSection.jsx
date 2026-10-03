@@ -1,4 +1,5 @@
-import { Camera, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 import { chefs } from "../data/chefs";
 
 export default function ChefSection() {
@@ -62,7 +63,7 @@ export default function ChefSection() {
                   aria-label={`${chef.name} Instagram`}
                   className="absolute right-5 top-5 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-[#F8F4EA]/90 text-[#12372A] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-[#C6A15B]"
                 >
-                  <Camera size={17} />
+                  <FaInstagram size={17} />
                 </a>
 
                 {/* Chef info */}
