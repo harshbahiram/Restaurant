@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Hero from "./sections/Hero";
 import AboutSection from "./sections/AboutSection";
+import PopularDishes from "./sections/PopularDishes";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <main>
         <Hero />
         <AboutSection />
+        <PopularDishes />
       </main>
     </div>
   );
