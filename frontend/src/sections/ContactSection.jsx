@@ -1,10 +1,6 @@
-import {
-  Clock3,
-  Mail,
-  MapPin,
-  Phone,
-  ArrowRight,
-} from "lucide-react";
+import { useState } from "react";
+import {Clock3,Mail,MapPin,Phone,ArrowRight,} from "lucide-react";
+import { submitContactForm } from "../services/api";
 
 const ZOMATO_URL = "https://www.zomato.com/";
 
@@ -27,6 +23,68 @@ const contactInfo = [
 ];
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setIsSubmitting(true);
+    setStatus({
+      type: "",
+      message: "",
+    });
+
+    try {
+      await submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: `Subject: ${formData.subject}\n\n${formData.message}`,
+      });
+
+      setStatus({
+        type: "success",
+        message: "Thank you! Your message has been sent successfully.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message:
+          error.message || "Something went wrong. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -56,7 +114,6 @@ export default function ContactSection() {
 
           {/* Left */}
           <div>
-
             {/* Contact Details */}
             <div className="space-y-5">
               {contactInfo.map((item) => {
@@ -144,10 +201,13 @@ export default function ContactSection() {
               </h3>
             </div>
 
-            <form className="space-y-5">
-
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
               <div className="grid gap-5 sm:grid-cols-2">
 
+                {/* Name */}
                 <div>
                   <label
                     htmlFor="name"
@@ -159,11 +219,15 @@ export default function ContactSection() {
                   <input
                     id="name"
                     type="text"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Your name"
+                    required
                     className="w-full border-b border-[#12372A]/20 bg-transparent px-0 py-3 text-sm text-[#12372A] outline-none transition-colors placeholder:text-[#68736C]/60 focus:border-[#C6A15B]"
                   />
                 </div>
 
+                {/* Email */}
                 <div>
                   <label
                     htmlFor="email"
@@ -175,13 +239,17 @@ export default function ContactSection() {
                   <input
                     id="email"
                     type="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Your email"
+                    required
                     className="w-full border-b border-[#12372A]/20 bg-transparent px-0 py-3 text-sm text-[#12372A] outline-none transition-colors placeholder:text-[#68736C]/60 focus:border-[#C6A15B]"
                   />
                 </div>
 
               </div>
 
+              {/* Subject */}
               <div>
                 <label
                   htmlFor="subject"
@@ -193,11 +261,15 @@ export default function ContactSection() {
                 <input
                   id="subject"
                   type="text"
+                  value={formData.subject}
+                  onChange={handleChange}
                   placeholder="How can we help?"
+                  required
                   className="w-full border-b border-[#12372A]/20 bg-transparent px-0 py-3 text-sm text-[#12372A] outline-none transition-colors placeholder:text-[#68736C]/60 focus:border-[#C6A15B]"
                 />
               </div>
 
+              {/* Message */}
               <div>
                 <label
                   htmlFor="message"
@@ -209,23 +281,42 @@ export default function ContactSection() {
                 <textarea
                   id="message"
                   rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Write your message..."
+                  required
                   className="w-full resize-none border-b border-[#12372A]/20 bg-transparent px-0 py-3 text-sm text-[#12372A] outline-none transition-colors placeholder:text-[#68736C]/60 focus:border-[#C6A15B]"
                 />
               </div>
 
+              {/* Status */}
+              {status.message && (
+                <p
+                  className={`text-sm ${
+                    status.type === "success"
+                      ? "text-green-700"
+                      : "text-red-600"
+                  }`}
+                >
+                  {status.message}
+                </p>
+              )}
+
+              {/* Submit */}
               <button
                 type="submit"
-                className="group mt-2 inline-flex items-center gap-3 rounded-full bg-[#12372A] px-7 py-3.5 text-sm font-semibold text-[#F8F4EA] transition-all duration-300 hover:bg-[#0B241B]"
+                disabled={isSubmitting}
+                className="group mt-2 inline-flex items-center gap-3 rounded-full bg-[#12372A] px-7 py-3.5 text-sm font-semibold text-[#F8F4EA] transition-all duration-300 hover:bg-[#0B241B] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
 
-                <ArrowRight
-                  size={17}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
+                {!isSubmitting && (
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                )}
               </button>
-
             </form>
           </div>
 
