@@ -1,11 +1,11 @@
-import { ArrowUpRight } from "lucide-react";
+import React from "react";
 
 export default function DishCard({ dish }) {
   return (
     <article className="group overflow-hidden rounded-sm bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
 
       {/* Image */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-64 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:rotate-[0.5deg] active:scale-[0.98]">
         <img
           src={dish.image}
           alt={dish.name}
@@ -44,14 +44,6 @@ export default function DishCard({ dish }) {
           {dish.description}
         </p>
 
-        <div className="mt-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#12372A]">
-          Discover dish
-
-          <ArrowUpRight
-            size={14}
-            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </div>
       </div>
     </article>
   );

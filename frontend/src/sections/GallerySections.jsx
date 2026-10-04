@@ -1,4 +1,5 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
 
 const galleryImages = [
   {
@@ -39,6 +40,17 @@ const galleryImages = [
 ];
 
 export default function GallerySection() {
+  const sliderRef = useRef(null);
+
+  const scrollGallery = (direction) => {
+    if (!sliderRef.current) return;
+
+    sliderRef.current.scrollBy({
+      left: direction === "left" ? -340 : 340,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="gallery"
@@ -48,7 +60,6 @@ export default function GallerySection() {
 
         {/* Header */}
         <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-
           <div>
             <div className="mb-5 flex items-center gap-4">
               <span className="h-px w-10 bg-[#C6A15B]" />
@@ -72,9 +83,49 @@ export default function GallerySection() {
           </p>
         </div>
 
-        {/* Gallery */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
+        {/* ================= MOBILE / TABLET ================= */}
+        <div className="relative lg:hidden">
 
+          {/* Left Arrow */}
+          <button
+            onClick={() => scrollGallery("left")}
+            className="absolute left-1 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#C6A15B]/30 bg-[#F8F4EA]/20 text-[#12372A] shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-[#12372A] hover:text-[#F8F4EA]"
+            aria-label="Previous gallery image"
+          >
+            <ArrowLeft size={18} />
+          </button>
+
+          {/* Gallery Cards */}
+          <div
+            ref={sliderRef}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-10 pb-5"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {galleryImages.map((image) => (
+              <div
+                key={image.id}
+                className="w-[82vw] shrink-0 snap-center transition-all duration-500 active:scale-[0.97] sm:w-[60vw] md:w-[48vw]"
+              >
+                <GalleryItem image={image} />
+              </div>
+            ))}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={() => scrollGallery("right")}
+            className="absolute right-1 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-[#C6A15B]/30 bg-[#F8F4EA]/20 text-[#12372A] shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-[#12372A] hover:text-[#F8F4EA]"
+            aria-label="Next gallery image"
+          >
+            <ArrowRight size={18} />
+          </button>
+        </div>
+
+        {/* ================= DESKTOP ================= */}
+        <div className="hidden grid-cols-1 gap-5 md:grid md:grid-cols-12">
           {/* Large Image */}
           <GalleryItem
             image={galleryImages[0]}
@@ -102,7 +153,6 @@ export default function GallerySection() {
             image={galleryImages[4]}
             className="md:col-span-5"
           />
-
         </div>
 
       </div>
@@ -113,7 +163,7 @@ export default function GallerySection() {
 function GalleryItem({ image, className = "" }) {
   return (
     <div
-      className={`group relative min-h-[280px] overflow-hidden ${className}`}
+      className={`group relative min-h-[280px] overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:rotate-[0.4deg] active:scale-[0.98] ${className}`}
     >
       <img
         src={image.image}
@@ -126,7 +176,6 @@ function GalleryItem({ image, className = "" }) {
 
       {/* Content */}
       <div className="absolute bottom-0 left-0 flex w-full items-end justify-between p-6 opacity-0 transition-all duration-500 group-hover:opacity-100">
-
         <span className="font-serif text-2xl text-[#F8F4EA]">
           {image.title}
         </span>
@@ -134,7 +183,6 @@ function GalleryItem({ image, className = "" }) {
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C6A15B] text-[#12372A]">
           <ArrowUpRight size={18} />
         </div>
-
       </div>
     </div>
   );

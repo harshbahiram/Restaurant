@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 import { Menu, X, Leaf } from "lucide-react";
 
 const navLinks = [
@@ -14,11 +14,29 @@ const navLinks = [
 const ZOMATO_URL = "https://www.zomato.com/";
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const closeMenu = () => {setIsOpen(false)};
+  const [isOpen, setIsOpen] = useState(false);
+  const closeMenu = () => {setIsOpen(false)};
+  const [scrolled, setScrolled] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+     setScrolled(window.scrollY > 40);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+     window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full bg-[#12372A]/95 backdrop-blur-md">
+    <header className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+    scrolled
+      ? "border-b border-[#C6A15B]/10 bg-[#0B241B]/95 shadow-lg backdrop-blur-md"
+      : "bg-gradient-to-b from-[#0B241B]/70 to-transparent"
+    }`} >
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
 
         {/* Logo */}
@@ -52,11 +70,11 @@ const Navbar = () => {
             <a
               key={link.name}
               href={link.href}
-              className="relative text-sm font-medium tracking-wide text-[#F8F4EA]/85 transition-colors duration-300 hover:text-[#C6A15B]"
+              className="group relative text-sm font-medium tracking-wide text-[#F8F4EA]/85 transition-colors duration-300 hover:text-[#C6A15B]"
             >
               {link.name}
 
-              <span className="absolute -bottom-2 left-0 h-px w-0 bg-[#C6A15B] transition-all duration-300 hover:w-full" />
+              <span className="absolute -bottom-2 left-0 h-px w-0 bg-[#C6A15B] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
 
