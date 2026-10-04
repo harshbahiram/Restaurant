@@ -1,39 +1,39 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
+import Dinning from "../assets/images/Our Dining Space.avif";
+import Table from "../assets/images/A Table Set.avif";
+import Evening from "../assets/images/Evening Dining.avif";
+import Fresh from "../assets/images/Fresh From The Kitchen.avif";
+import Indian from "../assets/images/Indian Flavours.avif";
 
 const galleryImages = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85",
+    image:Dinning,
     title: "Our Dining Space",
     size: "large",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=85",
+    image:Table,
     title: "A Table Set",
     size: "small",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85",
+    image:Evening,
     title: "Evening Dining",
     size: "small",
   },
   {
     id: 4,
-    image:
-      "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=1200&q=85",
+    image:Fresh,
     title: "Fresh From The Kitchen",
     size: "wide",
   },
   {
     id: 5,
-    image:
-      "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=85",
+    image:Indian,
     title: "Indian Flavours",
     size: "small",
   },

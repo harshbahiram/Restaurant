@@ -1,4 +1,5 @@
 import { Check, Sparkles } from "lucide-react";
+import about from "../assets/images/about.avif";
 
 const features = [
   "Authentic recipes and traditional flavours",
@@ -19,7 +20,7 @@ export default function AboutSection() {
           <div className="relative">
             <div className="overflow-hidden rounded-sm">
               <img
-                src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
+                src={about}
                 alt="Indian cuisine"
                 className="h-[500px] w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-[600px]"
               />

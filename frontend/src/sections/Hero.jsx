@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import hero from "../assets/images/hero.avif";
 
 const ZOMATO_URL = "https://www.zomato.com/";
 
@@ -45,8 +46,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=2000&q=85')",
+          backgroundImage: `url(${hero})`,
         }}
       />
 
