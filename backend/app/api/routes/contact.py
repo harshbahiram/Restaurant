@@ -5,6 +5,8 @@ from app.core.database import get_db
 from app.models.contact import Contact
 from app.schemas.contact import ContactCreate, ContactResponse
 
+from app.services.email import send_contact_email
+
 router = APIRouter(
     prefix="/api/contact",
     tags=["Contact"],
@@ -30,5 +32,12 @@ def create_contact(
     db.add(contact)
     db.commit()
     db.refresh(contact)
+
+    send_contact_email(
+        name=contact.name,
+        email=contact.email,
+        subject=contact.subject,
+        message=contact.message,
+    )
 
     return contact
