@@ -2,11 +2,16 @@ from fastapi import FastAPI
 from sqlalchemy import text
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.database import engine
 from app.api.routes.contact import router as contact_router
 
 from app.core.database import Base, engine
 from app.models.contact import Contact
+
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+
+from app.core.limiter import limiter
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,6 +20,13 @@ app = FastAPI(
     description="Backend API for The Classical Restaurant",
     version="1.0.0",
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(
+    RateLimitExceeded,
+    _rate_limit_exceeded_handler,
+)
+app.add_middleware(SlowAPIMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
