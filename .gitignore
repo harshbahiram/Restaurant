@@ -1,14 +1,17 @@
+# Python virtual environment
+backend/venv/
+backend/.venv/
+venv/
+.venv/
+
 # Environment variables
 .env
 .env.*
 !.env.example
 
-# Python
+# Python cache
 __pycache__/
 *.py[cod]
-venv/
-.venv/
-backend/venv/
 
 # Node
 node_modules/
